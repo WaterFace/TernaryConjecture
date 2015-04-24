@@ -100,4 +100,8 @@ deltaTime : Signal Float
 deltaTime = (\t -> t/Time.second) <~ Time.fps 60
 
 player : Form
-player = filled Color.green (ngon 3 15)
+player = 
+  group [ 
+          outlined (solid Color.green) (ngon 3 15)
+        , outlined (dotted Color.blue) (circle 17)
+        ]
