@@ -42,6 +42,9 @@ sequence = foldr (Signal.map2 (::)) <| constant []
 singleton : a -> List a
 singleton a = [a]
 
+unzip : Signal (a, b) -> (Signal a, Signal b)
+unzip s = (fst <~ s, snd <~ s)
+
 type alias Player = Object { acceleration : Float }
 
 defaultPlayer : Player
@@ -91,8 +94,8 @@ game = let width = fst <~ Window.dimensions
           <~ width
            ~ height
            ~ sequence [ drawPlayer <~ player' 
-                      --, moveX <~ (.mouseX <~ input) ~ (constant <| filled Color.red (circle 3))
-                      --, moveY <~ (.mouseY <~ input) ~ (constant <| filled Color.red (circle 3))
+                      , moveX <~ (.mouseX <~ input) ~ (constant <| filled Color.red (circle 3))
+                      , moveY <~ (.mouseY <~ input) ~ (constant <| filled Color.red (circle 3))
                       --, toForm <~ (show <~ input)
                       ]
 
@@ -102,5 +105,5 @@ deltaTime = (\t -> t/Time.second) <~ Time.fps 120
 player : Form
 player = 
   group [ 
-          outlined (solid Color.green) (ngon 3 15)
+          filled Color.green (ngon 3 15)
         ]
