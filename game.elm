@@ -97,11 +97,10 @@ game = let width = fst <~ Window.dimensions
                       ]
 
 deltaTime : Signal Float
-deltaTime = (\t -> t/Time.second) <~ Time.fps 60
+deltaTime = (\t -> t/Time.second) <~ Time.fps 120
 
 player : Form
 player = 
   group [ 
           outlined (solid Color.green) (ngon 3 15)
-        , outlined (dotted Color.blue) (circle 17)
         ]
