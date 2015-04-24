@@ -3118,18 +3118,15 @@ Elm.Main.make = function (_elm) {
    $Time = Elm.Time.make(_elm),
    $Window = Elm.Window.make(_elm);
    var player = $Graphics$Collage.group(_L.fromArray([A2($Graphics$Collage.outlined,
-                                                     $Graphics$Collage.solid($Color.green),
-                                                     A2($Graphics$Collage.ngon,
-                                                     3,
-                                                     15))
-                                                     ,A2($Graphics$Collage.outlined,
-                                                     $Graphics$Collage.dotted($Color.blue),
-                                                     $Graphics$Collage.circle(17))]));
+   $Graphics$Collage.solid($Color.green),
+   A2($Graphics$Collage.ngon,
+   3,
+   15))]));
    var deltaTime = A2($Signal._op["<~"],
    function (t) {
       return t / $Time.second;
    },
-   $Time.fps(60));
+   $Time.fps(120));
    var stepObject = F2(function (dt,
    obj) {
       return _U.replace([["x"
