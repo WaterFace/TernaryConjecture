@@ -17,6 +17,7 @@ type alias Object a =
         , ax : Float
         , ay : Float
         , dir : Float -- In radians
+        , sprite : Form
     }
 
 type alias Input = 
@@ -45,6 +46,9 @@ singleton a = [a]
 unzip : Signal (a, b) -> (Signal a, Signal b)
 unzip s = (fst <~ s, snd <~ s)
 
+(***) : (a -> b) -> (c -> d) -> (a, c) -> (b, d)
+(***) f g (a, b) = (f a, g b)
+
 type alias Player = Object { acceleration : Float }
 
 defaultPlayer : Player
@@ -56,10 +60,11 @@ defaultPlayer = { x = 0
                 , ay = 0
                 , dir = 0
                 , acceleration = 5
+                , sprite = player
                 }
 
-drawPlayer : Object a -> Form
-drawPlayer {x, y, dir} = move (x, y) <| rotate dir <| player
+drawObject : Object a -> Form
+drawObject {x, y, dir} = move (x, y) <| rotate dir <| player
 
 stepObject : Float -> Object a -> Object a
 stepObject dt obj = 
@@ -93,9 +98,9 @@ game = let width = fst <~ Window.dimensions
        in collage
           <~ width
            ~ height
-           ~ sequence [ drawPlayer <~ player' 
-                      , moveX <~ (.mouseX <~ input) ~ (constant <| filled Color.red (circle 3))
-                      , moveY <~ (.mouseY <~ input) ~ (constant <| filled Color.red (circle 3))
+           ~ sequence [ drawObject <~ player' 
+                      --, moveX <~ (.mouseX <~ input) ~ (constant <| filled Color.red (circle 3))
+                      --, moveY <~ (.mouseY <~ input) ~ (constant <| filled Color.red (circle 3))
                       --, toForm <~ (show <~ input)
                       ]
 
